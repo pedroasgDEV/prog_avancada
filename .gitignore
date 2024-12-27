@@ -1,4 +1,4 @@
 #GITIGNORE
 
-.pdf
-.run
+*.pdf
+*.run
