@@ -1,6 +1,7 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
+#include <cassert>
 #include <iostream>
 #include <array>
 #include <string>
@@ -18,6 +19,7 @@ class Word {
 		Word() { set(0); }
 		Word(const int word) { set(word); }
 		Word(const array<int, 3> word) { set(word); }
+		Word(string word) { set(word); }
 
 		//Destructors
         ~Word(){}
@@ -50,20 +52,11 @@ class Word {
 			}
 		}
 		void set(const array<int, 3> word) { wrd = word; }
-
-		//Overloads
-		friend std::istream& operator>>(std::istream& in, Word& word) {
-			string temp;
-
-			in >> temp;
-
-			word.wrd[0] = temp[0] - '0';
-			word.wrd[1] = temp[1] - '0';
-			word.wrd[2] = temp[2] - '0';
-
-			return in;
-		}
-                
+		void set(const string word) {
+			wrd[0] = word[0] - '0';
+			wrd[1] = word[1] - '0';
+			wrd[2] = word[2] - '0';
+		}       
 };
 
 class Interpreter {
@@ -89,7 +82,7 @@ class Interpreter {
 		void setRegisInt(const int d, const int n) { registers[d].set(n); count++; count++; pc++; }
 		void addRegisInt(const int d, const int n) { registers[d].set(registers[d].getInt() + n); count++; pc++; }
 		void multRegisInt(const int d, const int n) { registers[d].set(registers[d].getInt() * n); count++; pc++; }
-		void storeRegisRegis(const int d, const int s) { registers[d].set(registers[s].getArray()); count++; pc++; }
+		void setRegisRegis(const int d, const int s) { registers[d].set(registers[s].getArray()); count++; pc++; }
 		void addRegisRegis(const int d, const int s) { registers[d].set(registers[d].getInt() + registers[s].getInt()); count++; pc++; }
 		void multRegisRegis(const int d, const int s) { registers[d].set(registers[d].getInt() * registers[s].getInt()); count++; pc++; }
 		void setRegisRam(const int d, const int a) { registers[d].set(RAM[registers[a].getInt()].getArray()); count++; pc++; }
@@ -97,8 +90,47 @@ class Interpreter {
 		void goTo(const int d, const int s) { if(registers[s].getInt() != 0) pc = registers[d].getInt(); count++; }
 		void halt() { count++; pc = -1; }
 
-		
-		void comp() const;
+		//Instructors process
+		void comp() {
+			array<int, 3> input;
+			
+			while (pc == -1) {
+				input = RAM[pc].getArray();
+
+				switch (input[0]) {
+					case 0:
+						goTo(input[1], input[2]);
+						break;
+					case 1:
+						halt();
+						break;
+					case 2:
+						setRegisInt(input[1], input[2]);
+						break;
+					case 3:
+						addRegisInt(input[1], input[2]);
+						break;
+					case 4:
+						multRegisInt(input[1], input[2]);
+						break;
+					case 5:
+						setRegisRegis(input[1], input[2]);
+						break;
+					case 6:
+						addRegisRegis(input[1], input[2]);
+						break;
+					case 7:
+						multRegisRegis(input[1], input[2]);
+						break;
+					case 8:
+						setRegisRam(input[1], input[2]);
+						break;
+					case 9:
+						setRamRegis(input[1], input[2]);
+						break;
+				}
+			}
+		}
 
 		int getCount() const { return  count;}
 };
