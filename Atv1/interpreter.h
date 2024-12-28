@@ -4,6 +4,7 @@
 #include <iostream>
 #include <array>
 #include <string>
+#include <type_traits>
 
 using namespace std;
 
@@ -28,9 +29,9 @@ class Word {
 		//Seters
 		void set(const int word) {
 			int temp = word;
+			if (temp > 999) temp %= 1000;
+			
 			if(temp >= 100){
-				if (temp > 999) temp %= 999;
-
 				wrd[0] = temp / 100;
 				wrd[1] = (temp / 10) % 10;
 				wrd[2] = temp % 10;
@@ -75,16 +76,31 @@ class Interpreter {
 	
 	public:
 		//Constructor
-		Interpreter( const array<Word, 1000> RAM ){
+		Interpreter(const array<Word, 1000> RAM){
 			this->RAM = RAM;
 			pc = 0;
 			count = 0;
 		}
 
+		//Destructor
+		~Interpreter(){}
+
+		//Operations
+		void setRegisInt(const int d, const int n) { registers[d].set(n); count++; count++; pc++; }
+		void addRegisInt(const int d, const int n) { registers[d].set(registers[d].getInt() + n); count++; pc++; }
+		void multRegisInt(const int d, const int n) { registers[d].set(registers[d].getInt() * n); count++; pc++; }
+		void storeRegisRegis(const int d, const int s) { registers[d].set(registers[s].getArray()); count++; pc++; }
+		void addRegisRegis(const int d, const int s) { registers[d].set(registers[d].getInt() + registers[s].getInt()); count++; pc++; }
+		void multRegisRegis(const int d, const int s) { registers[d].set(registers[d].getInt() * registers[s].getInt()); count++; pc++; }
+		void setRegisRam(const int d, const int a) { registers[d].set(RAM[registers[a].getInt()].getArray()); count++; pc++; }
+		void setRamRegis(const int s, const int a) { RAM[registers[a].getInt()].set(registers[s].getArray()); count++; pc++; }
+		void goTo(const int d, const int s) { if(registers[s].getInt() != 0) pc = registers[d].getInt(); count++; }
+		void halt() { count++; pc = -1; }
+
+		
 		void comp() const;
 
 		int getCount() const { return  count;}
-
 };
 
 #endif
