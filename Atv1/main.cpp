@@ -8,15 +8,15 @@ using namespace  std;
 
 
 int main() {
-    int testCases;
+    int N;
     string line;
     getline(cin, line);
-    testCases = stoi(line);
+    N = stoi(line);
     getline(cin, line); // Linha em branco
 
     Interpreter interpreter;
 
-    while (testCases--) {
+    for(int i = 0; i < N; i++) {
         vector<string> instructions;
         while (getline(cin, line) && !line.empty()) {
             instructions.push_back(line);
