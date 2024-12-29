@@ -1,0 +1,53 @@
+INÍCIO
+    LER o número de casos de teste, `N`
+    PARA cada caso de teste:
+        INICIALIZAR os registradores com valor 0
+        INICIALIZAR a RAM com valores lidos da entrada ou 0 se não especificado
+        DEFINIR o contador de instruções `count` como 0
+        DEFINIR o contador do programa `pc` (program counter) como 0
+
+        ENQUANTO `pc` não for -1:
+            LER a instrução atual da RAM no endereço `pc`
+            DECODIFICAR a instrução:
+                `op` = primeiro dígito da instrução
+                `d` = segundo dígito da instrução
+                `n` = terceiro dígito da instrução
+
+            INCREMENTAR `count`
+
+            SE `op` == 1:
+                SAIR do loop (instrução de halt)
+                `pc` = -1
+            SENÃO SE `op` == 2:
+                REGISTRADOR[d] = n
+                `pc` = `pc` + 1
+            SENÃO SE `op` == 3:
+                REGISTRADOR[d] = (REGISTRADOR[d] + n) MOD 1000
+                `pc` = `pc` + 1
+            SENÃO SE `op` == 4:
+                REGISTRADOR[d] = (REGISTRADOR[d] * n) MOD 1000
+                `pc` = `pc` + 1
+            SENÃO SE `op` == 5:
+                REGISTRADOR[d] = REGISTRADOR[n]
+                `pc` = `pc` + 1
+            SENÃO SE `op` == 6:
+                REGISTRADOR[d] = (REGISTRADOR[d] + REGISTRADOR[n]) MOD 1000
+                `pc` = `pc` + 1
+            SENÃO SE `op` == 7:
+                REGISTRADOR[d] = (REGISTRADOR[d] * REGISTRADOR[n]) MOD 1000
+                `pc` = `pc` + 1
+            SENÃO SE `op` == 8:
+                REGISTRADOR[d] = RAM[REGISTRADOR[n]]
+                `pc` = `pc` + 1
+            SENÃO SE `op` == 9:
+                RAM[REGISTRADOR[n]] = REGISTRADOR[d]
+                `pc` = `pc` + 1
+            SENÃO SE `op` == 0:
+                SE REGISTRADOR[n] != 0:
+                    `pc` = REGISTRADOR[d]
+                SENÃO:
+                    `pc` = `pc` + 1
+
+        IMPRIMIR o valor de `count` (número de instruções executadas)
+
+FIM
