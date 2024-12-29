@@ -1,29 +1,32 @@
-//Bibs
 #include <iostream>
+#include <vector>
+#include <string>
 
-//Headers
 #include "interpreter.h"
 
 using namespace  std;
 
-int main(){
-    int count = 0;
-    int n;
-    char quebra;
 
-    Interpreter* in;
-    Word* word;
+int main() {
+    int testCases;
+    string line;
+    getline(cin, line);
+    testCases = stoi(line);
+    getline(cin, line); // Linha em branco
 
-    cin >> n;
+    Interpreter interpreter;
 
-    for(int i = 0; i < n; i++){
-        cin >> quebra;
+    while (testCases--) {
+        vector<string> instructions;
+        while (getline(cin, line) && !line.empty()) {
+            instructions.push_back(line);
+        }
 
-        
+        interpreter.init(instructions);
+        interpreter.execute();
 
+        cout << interpreter.getCount() << endl;
     }
-    
-
 
     return 0;
 }
