@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ostream>
 #include <vector>
 #include <string>
 
@@ -30,7 +31,7 @@ int main() {
         interpreter.execute();
 
         // Imprime a contagem de execuções
-        cout << interpreter.getCount() << endl;
+        cout << interpreter.getCount() << endl << endl;
     }
 
     return 0;
