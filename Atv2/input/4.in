@@ -1,0 +1,28 @@
+4
+2 3
+Erdos, P., Smith, J.: Paper 1
+Smith, J., Brown, K.: Paper 2
+Brown, K.
+Johnson, M.
+Erdos, P.
+5 1
+Erdos, P., A, A.: Paper 1
+A, A., B, B.: Paper 2
+B, B., C, C.: Paper 3
+C, C., D, D.: Paper 4
+D, D., E, E.: Paper 5
+E, E.
+3 3
+Erdos, P., A, A.: Paper 1
+A, A., B, B., C, C.: Paper 2
+B, B., D, D.: Paper 3
+D, D.
+C, C.
+Erdos, P.
+4 2
+Erdos, P., A, A.: Paper 1
+A, A., B, B.: Paper 2
+B, B., C, C.: Paper 3
+C, C., Erdos, P.: Paper 4
+B, B.
+C, C.

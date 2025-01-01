@@ -9,6 +9,8 @@
 
 using namespace std;
 
+constexpr int INFINITY_ERDOS = 9999999;
+
 class Author {
     private:
         // Atributos
@@ -24,16 +26,14 @@ class Author {
         };
 
         // Fila de prioridade
-        std::priority_queue<Author*, std::vector<Author*>, CompareErdos> author_queue;
+        std::priority_queue<Author*, std::vector<Author*>, CompareErdos> collaborators;
 
     public:
         // Construtor
         Author(const string& last_name = "Erdos", const string& first_name = "P.") 
-            : last_name(last_name), first_name(first_name), erdos(0) {
+            : last_name(last_name), first_name(first_name), erdos(INFINITY_ERDOS) {
             if (last_name == "Erdos" && first_name == "P.") {
                 erdos = 0;  // O autor "Erdos" tem o número de Erdos igual a 0
-            } else {
-                erdos = INT_MAX;  // Outros autores têm um número de Erdos alto inicialmente
             }
         }
 
@@ -47,27 +47,16 @@ class Author {
 
         // Atualiza o número de Erdos baseado na fila de prioridade
         void updateErdos() {
-            if (author_queue.empty()) return;
-            erdos = author_queue.top()->getErdos() + 1; // O Erdos de um autor é o de seu maior colaborador + 1
+            int new_erdos = collaborators.top()->getErdos() + 1; // Pega o nuemero de Erdos do menor da lista de prioridade
+            if (new_erdos < erdos) { // Verica se é menor que o atual
+                erdos = new_erdos; // Se for menor, se torna o novo numero de Erdos
+            }
         }
 
         // Adiciona um autor à fila de prioridade
         void addAuthorToQueue(Author* a) {
-            author_queue.push(a);
+            collaborators.push(a);
             updateErdos();  // Atualiza o número de Erdos após adicionar um autor
-        }
-
-        // Verifica se um autor está na fila de prioridade com base no sobrenome
-        bool findAuthorInQueue(const string& last_name) const {
-            // Percorre a fila para procurar o autor
-            priority_queue<Author*, vector<Author*>, CompareErdos> temp_queue = author_queue;
-            while (!temp_queue.empty()) {
-                if (temp_queue.top()->last_name == last_name) {
-                    return true;  // Retorna verdadeiro se o autor for encontrado
-                }
-                temp_queue.pop();
-            }
-            return false;  // Retorna falso se o autor não for encontrado
         }
 
         //Sobrecarga a saida
@@ -76,7 +65,7 @@ class Author {
             out << author.getLastName() << ", " << author.getFirstName() << " ";
             
             // Verifica se o número de Erdos é INT_MAX (não calculado ou não disponível)
-            if (author.getErdos() == INT_MAX) {
+            if (author.getErdos() == INFINITY_ERDOS) {
                 out << "infinity";  // Se o Erdos não foi calculado, coloca "N/A"
             } else {
                 // Caso contrário, imprime o número de Erdos
