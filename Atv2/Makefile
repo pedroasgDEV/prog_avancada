@@ -37,4 +37,4 @@ test:
 	make clear
 
 clear:
-	rm main.run
+	rm main.run temp.out
