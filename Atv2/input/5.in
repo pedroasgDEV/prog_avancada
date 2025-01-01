@@ -1,0 +1,26 @@
+5
+3 1
+Erdos, P., A, A.: Paper 1
+A, A., B, B.: Paper 2
+A, A., C, C.: Paper 3
+C, C.
+2 2
+Smith, J., Johnson, J.: Independent work
+Brown, K., White, W.: Another work
+Smith, J.
+Brown, K.
+2 1
+Erdos, P., A, A.: Paper 1
+A, A., B, B.: Paper 2
+B, B.
+6 2
+Erdos, P., A, A.: Paper 1
+A, A., B, B.: Paper 2
+B, B., C, C.: Paper 3
+C, C., D, D.: Paper 4
+D, D., E, E.: Paper 5
+F, F., G, G.: Isolated work
+D, D.
+F, F.
+0 1
+Smith, J.
