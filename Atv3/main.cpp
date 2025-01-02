@@ -11,7 +11,7 @@ using namespace  std;
 set<string> solution(vector<string> in, string max, string min) {
     int size_in = in.size(); // Tamanho do vetor de entrada
     set<string> result; // Soluções possiveis
-    int size_smaller; // Tamanho do menor fragmento
+    int size_smaller = min.length(); // Tamanho do menor fragmento
     int smaller_position = 0; // Qual a posição do menor fragmento se é no inicio (-1) ou no final (1) ou indefinido (0)
     vector<string> aux; // Vetor auxiliar para armazenar os fragmento opostos a menor fragmento
     int size_aux; // Tamanho do vetor auxiliar
@@ -26,12 +26,9 @@ set<string> solution(vector<string> in, string max, string min) {
                 //Se a solução for maior que uma solução possivel
                 if( i == j || (i + j).length() > (min + max).length() ) continue;
                 result.insert(i + j);
-                result.insert(j + i);
             }
         return  result;
     }
-
-    size_smaller = min.length();
 
     
     for(auto i : in){
@@ -64,6 +61,7 @@ set<string> solution(vector<string> in, string max, string min) {
 
     size_aux = aux.size(); // Pega o tamanho do vetor auxiliar
 
+    // Se não for possivel encontrar somente uma solução valida
     // Se há fragmentos opostos a mais ou a menos
     if ( size_aux != size_in/2 - 1){
         // Imprime todas as soluções possiveis
@@ -72,20 +70,13 @@ set<string> solution(vector<string> in, string max, string min) {
                 //Se a solução for maior que uma solução possivel
                 if( i == j || (i + j).length() > (min + max).length() ) continue;
                 result.insert(i + j);
-                result.insert(j + i);
             }
         return  result;
     }
 
-    string bigger = aux[0]; // Maior do vetor auxiliar 
-
-    // Encontra o maior fragmento oposto ao menor fragmento
-    for(int i = 1; i < size_aux; i++)
-        if ( aux[i].length() > bigger.length() ) bigger = aux[i];
-
     // Concatena os dois fragmentos com base na posição do menor
-    if (smaller_position == -1) result.insert(min + bigger);
-    if (smaller_position == 1) result.insert(bigger + min);
+    if (smaller_position == -1) result.insert(min + max);
+    if (smaller_position == 1) result.insert(max + min);
 
     return  result;
 }
