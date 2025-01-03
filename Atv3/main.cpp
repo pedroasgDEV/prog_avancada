@@ -7,7 +7,7 @@
 using namespace std;
 
 set<string> solution(vector<string> in) {
-    set<string> results; // Soluções possíveis
+    set<string> results; // Soluções possíveis 
     bool is_valid, is_valid_solution; // Se a solução é válida ou não
 
     // Tenta todas as soluções possíveis
@@ -22,6 +22,9 @@ set<string> solution(vector<string> in) {
 
     // Se a quantidade de entradas for ímpar, não é possível formar pares válidos
     if (in.size() % 2 != 0) return results;
+    
+    set<string> results_cp(results); // Faz uma copia dos resultados possiveis
+
 
     // Seleciona as soluções possíveis
     for (auto i = results.begin(); i != results.end();) {
@@ -53,6 +56,9 @@ set<string> solution(vector<string> in) {
             ++i; // Apenas avança o iterador se a solução for válida
         }
     }
+
+    // Se não encontrar nenhum resultado possivel
+    if(results.empty()) return results_cp; // Retorna todas as concatenações
 
     return results;
 }

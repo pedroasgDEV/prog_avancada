@@ -10,12 +10,14 @@ PARA cada caso de teste (de 0 até N-1):
 
     PARA cada fragmento i EM (files):
         PARA cada fragmento j EM (files):
-            SE i == j: CONTINUAR
+            SE &i == &j: CONTINUAR
             CONCATENAR i e j em ambas as ordens
             ADICIONAR as concatenações ao conjunto results
 
     SE tamanho de (files) for ímpar:
             RETORNAR results
+
+    inicializar um conjunto de elementos unicos (set) como copia de (results) intitulado (results_cp)
     
     PARA cada candidato (i) em results:
         inicializar variável (solucao_valida) como VERDADEIRO
@@ -24,7 +26,7 @@ PARA cada caso de teste (de 0 até N-1):
             inicializar variável (valido) como FALSO
             
             PARA cada fragmento_k em entrada:
-                SE fragmento_j == fragmento_k:CONTINUAR
+                SE &fragmento_j == &fragmento_k: CONTINUAR
                 
                 SE fragmento_j + fragmento_k == i OU fragmento_k + fragmento_j == i:
                     definir a variavel (valido) como VERDADEIRO
@@ -36,6 +38,10 @@ PARA cada caso de teste (de 0 até N-1):
         
         SE (solucao_valida) for FALSO:
             REMOVER candidato i de results
+    
+    SE (results) estiver vazio:
+        PARA cada solução em (results_cp):
+            IMPRIMIR solução 
 
     PARA cada solução válida em results:
         IMPRIMIR solução
