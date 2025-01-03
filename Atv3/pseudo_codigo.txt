@@ -1,53 +1,43 @@
-INÍCIO
-    LER o número de casos de teste, `N`
-    PARA cada caso de teste:
-        INICIALIZAR os registradores com valor 0
-        INICIALIZAR a RAM com valores lidos da entrada ou 0 se não especificado
-        DEFINIR o contador de instruções `count` como 0
-        DEFINIR o contador do programa `pc` (program counter) como 0
+LER número de casos de teste (N)
 
-        ENQUANTO `pc` não for -1:
-            LER a instrução atual da RAM no endereço `pc`
-            DECODIFICAR a instrução:
-                `op` = primeiro dígito da instrução
-                `d` = segundo dígito da instrução
-                `n` = terceiro dígito da instrução
+PARA cada caso de teste (de 0 até N-1):
+    inicializar lista de fragmentos vazia (files)
 
-            INCREMENTAR `count`
+    ENQUANTO houver linhas na entrada E a linha não for vazia:
+        ADICIONAR linha à lista de fragmentos (files)
 
-            SE `op` == 1:
-                SAIR do loop (instrução de halt)
-                `pc` = -1
-            SENÃO SE `op` == 2:
-                REGISTRADOR[d] = n
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 3:
-                REGISTRADOR[d] = (REGISTRADOR[d] + n) MOD 1000
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 4:
-                REGISTRADOR[d] = (REGISTRADOR[d] * n) MOD 1000
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 5:
-                REGISTRADOR[d] = REGISTRADOR[n]
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 6:
-                REGISTRADOR[d] = (REGISTRADOR[d] + REGISTRADOR[n]) MOD 1000
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 7:
-                REGISTRADOR[d] = (REGISTRADOR[d] * REGISTRADOR[n]) MOD 1000
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 8:
-                REGISTRADOR[d] = RAM[REGISTRADOR[n]]
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 9:
-                RAM[REGISTRADOR[n]] = REGISTRADOR[d]
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 0:
-                SE REGISTRADOR[n] != 0:
-                    `pc` = REGISTRADOR[d]
-                SENÃO:
-                    `pc` = `pc` + 1
+    inicializar um conjunto de elementos unicos (set) vazio para resultados possíveis (results)
 
-        IMPRIMIR o valor de `count` (número de instruções executadas)
+    PARA cada fragmento i EM (files):
+        PARA cada fragmento j EM (files):
+            SE i == j: CONTINUAR
+            CONCATENAR i e j em ambas as ordens
+            ADICIONAR as concatenações ao conjunto results
+
+    SE tamanho de (files) for ímpar:
+            RETORNAR results
+    
+    PARA cada candidato (i) em results:
+        inicializar variável (solucao_valida) como VERDADEIRO
+        
+        PARA cada fragmento_j em entrada:
+            inicializar variável (valido) como FALSO
+            
+            PARA cada fragmento_k em entrada:
+                SE fragmento_j == fragmento_k:CONTINUAR
+                
+                SE fragmento_j + fragmento_k == i OU fragmento_k + fragmento_j == i:
+                    definir a variavel (valido) como VERDADEIRO
+                    PARAR o loop interno
+
+            SE (valido) for FALSO:
+                definir a variavel (solucao_valida) como FALSO
+                PARAR o loop externo
+        
+        SE (solucao_valida) for FALSO:
+            REMOVER candidato i de results
+
+    PARA cada solução válida em results:
+        IMPRIMIR solução
 
 FIM
