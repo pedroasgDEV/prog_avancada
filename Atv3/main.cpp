@@ -24,8 +24,8 @@ set<string> solution(vector<string> in, string min, string max) {
         // Imprime todas as soluções possiveis
         for (auto i : in)
             for (auto j : in) {
-                //Se a solução for maior que uma solução possivel
-                if( i == j ) continue;
+                //Se a solução for maior que uma solução possivel ou os dois fragmentos forem iguais
+                if( i == j || (i + j).length() != (min + max).length()) continue;
                 result.insert(i + j);
             }
         return  result;
@@ -68,8 +68,8 @@ set<string> solution(vector<string> in, string min, string max) {
         // Imprime todas as soluções possiveis
         for (auto i : in)
             for (auto j : in) {
-                //Se a solução for maior que uma solução possivel
-                if( i == j ) continue;
+                //Se a solução for maior que uma solução possivel ou os dois fragmentos forem iguais
+                if( i == j || (i + j).length() != (min + max).length()) continue;
                 result.insert(i + j);
             }
         return  result;
@@ -80,8 +80,6 @@ set<string> solution(vector<string> in, string min, string max) {
     // Encontra o maior fragmento oposto
     for(auto i : aux) 
         if(i.length() > bigger.length()) bigger = i;
-
-    // Pega a maior string do vetor oposto
 
     // Concatena os dois fragmentos com base na posição do menor
     if (smaller_position < 0) result.insert(min + bigger);
