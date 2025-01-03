@@ -1,0 +1,49 @@
+LER número de casos de teste (N)
+
+PARA cada caso de teste (de 0 até N-1):
+    inicializar lista de fragmentos vazia (files)
+
+    ENQUANTO houver linhas na entrada E a linha não for vazia:
+        ADICIONAR linha à lista de fragmentos (files)
+
+    inicializar um conjunto de elementos unicos (set) vazio para resultados possíveis (results)
+
+    PARA cada fragmento i EM (files):
+        PARA cada fragmento j EM (files):
+            SE &i == &j: CONTINUAR
+            CONCATENAR i e j em ambas as ordens
+            ADICIONAR as concatenações ao conjunto results
+
+    SE tamanho de (files) for ímpar:
+            RETORNAR results
+
+    inicializar um conjunto de elementos unicos (set) como copia de (results) intitulado (results_cp)
+    
+    PARA cada candidato (i) em results:
+        inicializar variável (solucao_valida) como VERDADEIRO
+        
+        PARA cada fragmento_j em entrada:
+            inicializar variável (valido) como FALSO
+            
+            PARA cada fragmento_k em entrada:
+                SE &fragmento_j == &fragmento_k: CONTINUAR
+                
+                SE fragmento_j + fragmento_k == i OU fragmento_k + fragmento_j == i:
+                    definir a variavel (valido) como VERDADEIRO
+                    PARAR o loop interno
+
+            SE (valido) for FALSO:
+                definir a variavel (solucao_valida) como FALSO
+                PARAR o loop externo
+        
+        SE (solucao_valida) for FALSO:
+            REMOVER candidato i de results
+    
+    SE (results) estiver vazio:
+        PARA cada solução em (results_cp):
+            IMPRIMIR solução 
+
+    PARA cada solução válida em results:
+        IMPRIMIR solução
+
+FIM
