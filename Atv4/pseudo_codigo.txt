@@ -1,53 +1,37 @@
 INÍCIO
-    LER o número de casos de teste, `N`
+    LER o número de casos de teste
+
     PARA cada caso de teste:
-        INICIALIZAR os registradores com valor 0
-        INICIALIZAR a RAM com valores lidos da entrada ou 0 se não especificado
-        DEFINIR o contador de instruções `count` como 0
-        DEFINIR o contador do programa `pc` (program counter) como 0
+        LER as taxas de pedágio para cada hora (pedágios[0] até pedágios[23])
 
-        ENQUANTO `pc` não for -1:
-            LER a instrução atual da RAM no endereço `pc`
-            DECODIFICAR a instrução:
-                `op` = primeiro dígito da instrução
-                `d` = segundo dígito da instrução
-                `n` = terceiro dígito da instrução
+        LER os registros de entrada:
+            PARA cada linha de registro:
+                Criar um objeto Registro e adicionar à lista de registros
+        
+        ORDENAR registros pela ordem de licença e depois data (utilizando o operador <)
+        
+        INICIALIZAR uma lista de contas vazia
+        
+        PARA i de 0 até tamanho de registros - 1:
+            SE a licença do registros[i] for diferente da licença do registros[i+1]:
+                incrementar i e continuar
+            SE o tipo de registros[i] não for "enter" ou tipo de registros[i+1] não for "exit":
+                incrementar i e continuar
 
-            INCREMENTAR `count`
+            BUSCAR uma conta com a licença do registro[i]
+            
+            SE não encontrar:
+                CRIAR nova conta com a licença do registros[i] e SOMA 2 a fatura da conta 
+                ADICIONAR a conta à lista de resultado
+            
+            SOMAR taxa da viagem à fatura da conta     
+            // taxa da viagem = ((distancia pecorrida) * (taxa da hora de entrada) ) / 100 + 1 
 
-            SE `op` == 1:
-                SAIR do loop (instrução de halt)
-                `pc` = -1
-            SENÃO SE `op` == 2:
-                REGISTRADOR[d] = n
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 3:
-                REGISTRADOR[d] = (REGISTRADOR[d] + n) MOD 1000
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 4:
-                REGISTRADOR[d] = (REGISTRADOR[d] * n) MOD 1000
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 5:
-                REGISTRADOR[d] = REGISTRADOR[n]
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 6:
-                REGISTRADOR[d] = (REGISTRADOR[d] + REGISTRADOR[n]) MOD 1000
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 7:
-                REGISTRADOR[d] = (REGISTRADOR[d] * REGISTRADOR[n]) MOD 1000
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 8:
-                REGISTRADOR[d] = RAM[REGISTRADOR[n]]
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 9:
-                RAM[REGISTRADOR[n]] = REGISTRADOR[d]
-                `pc` = `pc` + 1
-            SENÃO SE `op` == 0:
-                SE REGISTRADOR[n] != 0:
-                    `pc` = REGISTRADOR[d]
-                SENÃO:
-                    `pc` = `pc` + 1
+            incrementar i por 2
+        
+        ORDENAR a lista de contas pela licença (utilizando o operador <)
 
-        IMPRIMIR o valor de `count` (número de instruções executadas)
+        PARA cada conta na lista de contas:
+            imprimir conta
 
 FIM

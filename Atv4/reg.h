@@ -4,8 +4,11 @@
 
 #include <iostream>
 #include <istream>
+#include <iterator>
 #include <sstream>
 #include <string>
+#include <iomanip>
+#include <cmath>
 
 using namespace std;
 
@@ -32,43 +35,56 @@ class Reg {
 
 		// Sobrecarga do operador menor que
 		bool operator<(const Reg& other) const{
-			if(month != other.month) return month < other.month; // Compara os meses
+			if(license != other.license) return license < other.license; // Compara as licensas 
+			else if(month != other.month) return month < other.month; // Compara os meses
 			else if(day != other.day) return day < other.day;  // Compara os dias
 			else if(hour != other.hour) return hour < other.hour;  // Compara as horas
-			else if(minute != other.minute) return minute < other.minute; // Compara os minutos
-			else return license < other.license; // Compara as licensas
+			else return minute < other.minute; // Compara os minutos
 		}
 
 		// Sobrecarga de entrada
-		friend istream& operator>>(std::istream& in, Reg& r){
+		friend istream& operator>>(istream& in, Reg& r){
 			string date;
 
 			// Faz as leituras
-			cin >> r.license;
-			cin >> date;
-			cin >> r.type;
-			cin >> r.km;
+			in >> r.license >> date  >> r.type >> r.km;
 
-			istringstream stream(date);
-			string part;
+			// Separa a data e horario do registro
+			sscanf(date.c_str(), "%d:%d:%d:%d", &(r.month), &(r.day),  &(r.hour),  &(r.minute));
 
-			// Separa o mes
-			getline(stream, part, ':');
-			r.month = stoi(part);
+			return  in;
+		}
+};
 
-			// Separa o dia
-			getline(stream, part, ':');
-			r.day = stoi(part);
+// Representação de cada conta
+class Account {
+	private:
+		string  license; // Placa do veiculo
+		float bill; // Fatura
 
-			// Separa a hora
-			getline(stream, part, ':');
-			r.hour = stoi(part);
-			
-			// Separa o minuto
-			getline(stream, part, ':');
-			r.minute = stoi(part);
+	public:
+		// Contructor
+		Account(const string license) : license (license), bill(2) {}
+		// Destructor
+		~Account() {}
 
-			return  cin;
+		// Geter
+		string getLicense() const { return license; }
+
+		// Metodos
+		void addBill(const int km_in, const int km_out, int toll) {
+			float distance = abs(km_out - km_in); // Calcula a distância
+			bill += (toll * distance) / 100.0f + 1.0f; // Calcula a fatura com base no pedágio
+		}
+
+
+		// Sobrecarga do operador menor que
+		bool operator<(const Account& other) const { return license < other.license; }
+
+		 // Sobrecarga do operador de saída
+		friend ostream& operator<<(ostream& out, const Account& a) {
+			out << a.license << " $" << fixed << setprecision(2) << a.bill;
+			return out;
 		}
 };
 

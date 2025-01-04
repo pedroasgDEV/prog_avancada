@@ -1,46 +1,47 @@
-LEIA n (número de casos de teste)
+INÍCIO
+    LEIA n (número de casos de teste)
 
-PARA cada caso de teste (de 1 até n) FAÇA:
-    LEIA x (número de trabalhos) e y (número de autores consultados)
+    PARA cada caso de teste (de 1 até n) FAÇA:
+        LEIA x (número de trabalhos) e y (número de autores consultados)
 
-    INICIE um conjunto de elementos unicos (set) vazio para autores conhecidos
+        INICIE um conjunto de elementos unicos (set) vazio para autores conhecidos
 
-    PARA cada trabalho (de 1 até x) FAÇA:
-        LEIA a linha com os autores do trabalho
-        DIVIDA a linha em nomes separados por vírgulas e ignore tudo após ":"
-        
-        INICIE um conjunto de elementos unicos (set) vazio para autores do trabalho atual
-
-        PARA cada par (sobrenome, nome) nos nomes DIVIDIDOS FAÇA:
-            SE o autor já está na lista de autores conhecidos ENTÃO:
-                USE o autor existente
-            CASO CONTRÁRIO:
-                CRIE um novo autor
-                SE for Erdos: Numero de Erdos = 0
-                CASO CONTRÁRIO: Numero de Erdos = INIFNITY_ERDOS
-                ADICIONE à lista de autores conhecidos
+        PARA cada trabalho (de 1 até x) FAÇA:
+            LEIA a linha com os autores do trabalho
+            DIVIDA a linha em nomes separados por vírgulas e ignore tudo após ":"
             
-            PARA cada autor no conjunto de elementos do trabalho atual FAÇA:
-                ADICIONE os autores à fila de prioridade um ao outro mutualmente 
-                ATUALIZE o Numero de Erdos de ambos 
+            INICIE um conjunto de elementos unicos (set) vazio para autores do trabalho atual
 
-            ADICIONE o autor atual à lista do trabalho
+            PARA cada par (sobrenome, nome) nos nomes DIVIDIDOS FAÇA:
+                SE o autor já está na lista de autores conhecidos ENTÃO:
+                    USE o autor existente
+                CASO CONTRÁRIO:
+                    CRIE um novo autor
+                    SE for Erdos: Numero de Erdos = 0
+                    CASO CONTRÁRIO: Numero de Erdos = INIFNITY_ERDOS
+                    ADICIONE à lista de autores conhecidos
+                
+                PARA cada autor no conjunto de elementos do trabalho atual FAÇA:
+                    ADICIONE os autores à fila de prioridade um ao outro mutualmente 
+                    ATUALIZE o Numero de Erdos de ambos 
 
-    IMPRIMA "Scenario X" (onde X é o número do caso de teste)
+                ADICIONE o autor atual à lista do trabalho
 
-    PARA cada autor na consulta (de 1 até y) FAÇA:
-        LEIA a linha com o nome do autor
-        DIVIDA a linha em (sobrenome, nome)
+        IMPRIMA "Scenario X" (onde X é o número do caso de teste)
 
-        SE o autor está na lista de autores conhecidos ENTÃO:
-            SE o número de Erdős do autor for INIFNITY_ERDOS:
-                IMPRIMA "infinity"
+        PARA cada autor na consulta (de 1 até y) FAÇA:
+            LEIA a linha com o nome do autor
+            DIVIDA a linha em (sobrenome, nome)
+
+            SE o autor está na lista de autores conhecidos ENTÃO:
+                SE o número de Erdős do autor for INIFNITY_ERDOS:
+                    IMPRIMA "infinity"
+                CASO CONTRÁRIO:
+                    IMPRIMA o número de Erdős do autor
             CASO CONTRÁRIO:
-                IMPRIMA o número de Erdős do autor
-        CASO CONTRÁRIO:
-            IMPRIMA "infinity"
+                IMPRIMA "infinity"
 
-    PARA cada autor na lista de autores conhecidos FAÇA:
-        LIBERE a memória do autor
+        PARA cada autor na lista de autores conhecidos FAÇA:
+            LIBERE a memória do autor
 
 FIM

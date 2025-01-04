@@ -1,5 +1,6 @@
 INÍCIO
     LER o número de casos de teste, `N`
+    
     PARA cada caso de teste:
         INICIALIZAR os registradores com valor 0
         INICIALIZAR a RAM com valores lidos da entrada ou 0 se não especificado
