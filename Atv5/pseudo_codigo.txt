@@ -1,0 +1,36 @@
+Variáveis globais:
+  fatorial_cash: array de inteiros longos positivos de tamanho 12
+
+Função dinamic_fatorial(n):
+    Entrada: inteiro n
+    Saída: inteiro longo positivo
+
+    SE n == 0: retorne 1
+    SE fatorial_cash[n - 1] for 0: fatorial_cash[n - 1] = n * dinamic_fatorial(n - 1)
+        
+    RETORNAR fatorial_cash[n - 1]
+
+Função multinomial_theorem(n, k, integers):
+    Entrada: inteiro n e k e um ventor de inteiros (integers)
+    Saída: inteiro longo positivo
+
+    SE k == 1: retorne 1
+
+    INICIALIZAR (fatorial_cash) com valores 0
+    INICIALIZAR os inteiros longos positivos (div) como 1 e (num)
+    
+    PARA cada elemento i em (integers):
+        MULTIPLICAR (div) pelo retorno de dinamic_fatorial(i)
+
+    DEFINIR (num) como o retorno de dinamic_fatorial(n)
+
+    RETORNAR (num) / (div)
+
+Função principal (main):
+
+    ENQUANTO houver entrada:
+        LER n e k
+        INICIALIZAR um vetor integers de tamanho k (integers)
+        LER k inteiros e ARMAZENAR em (integers)
+        CALCULAR o coeficiente na expansão de polinomios com multinomial_theorem(n, k, integers)
+        IMPRIMIR o resultado
